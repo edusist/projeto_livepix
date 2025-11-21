@@ -22,6 +22,25 @@ class Cliente
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public function search(?int $id = null): array
+    {
+        $pdo = $this->db->connect();
+        $stmt = $pdo->prepare("SELECT c.cod, c.cod_assistencia, a.nome_assistencia, c.nome, c.logradouro, c.numero, c.bairro, c.localidade, c.uf, c.cep 
+                                    FROM clientes c
+                                    LEFT JOIN assistencias a 
+                                    ON c.cod_assistencia = a.cod     
+                                    WHERE  c.cod = $id
+                            ");
+
+        $stmt->execute();
+        // echo "<pre>";
+        // var_dump( $stmt["queryString"]);        
+        // echo "<br>";
+        // // var_dump($action);
+        // echo "</pre>";
+        // die();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     //Editar
     public function atualizar(int $id, array $dados): bool
     {
@@ -55,8 +74,8 @@ class Cliente
     {
 
         $pdo = $this->db->connect();
-        $stmt = $pdo->prepare("DELETE FROM clientes WHERE cod = :cod"); 
-   
+        $stmt = $pdo->prepare("DELETE FROM clientes WHERE cod = :cod");
+
 
         return $stmt->execute([":cod" => $id]);
     }

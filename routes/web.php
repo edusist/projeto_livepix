@@ -18,14 +18,18 @@ $router->post("/cliente/salvar", [ClienteController::class, "store"]);
 $router->get("/cliente/editar/{id}", [ClienteController::class, "editar"]);
 $router->post("/cliente/atualizar/{id}", [ClienteController::class, "update"]);
 $router->get("/cliente/excluir/{id}", [ClienteController::class, "excluir"]);
+$router->get("/cliente/pesquisar", [ClienteController::class, "pesquisar"]);
+$router->post("/cliente/pesquisar", [ClienteController::class, "pesquisar"]);
 
 
 $router->get("/assistencia/listar", [AssistenciaController::class, "listar"]);
 $router->get("/assistencia/cadastrar", [AssistenciaController::class, "create"]);
-$router->post("/assistencia/salvar", [AssistenciaController::class, "store"]);
+$router->post("/assistencia/salvar", [AssistenciaController::class, "store"]);  
 $router->get("/assistencia/editar/{id}", [AssistenciaController::class, "editar"]);
 $router->post("/assistencia/atualizar/{id}", [AssistenciaController::class, "update"]);
 $router->get("/assistencia/excluir/{id}", [AssistenciaController::class, "excluir"]);
+$router->get("/assistencia/pesquisar", [AssistenciaController::class, "pesquisar"]);
+$router->post("/assistencia/pesquisar", [AssistenciaController::class, "pesquisar"]);
 
 
 // ------------------------------------------

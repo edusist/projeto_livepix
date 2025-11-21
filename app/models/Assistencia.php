@@ -22,6 +22,21 @@ class Assistencia
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function search(int $id): ?array
+    {
+        $pdo = $this->db->connect();
+        $stmt = $pdo->prepare("SELECT cod, nome_assistencia, situacao FROM assistencias WHERE cod = :id");
+
+        $stmt->execute(['id' => $id]);
+        // echo "<pre>";
+        // var_dump( $stmt["queryString"]);        
+        // echo "<br>";
+        // // var_dump($action);
+        // echo "</pre>";
+        // die();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getAllAssistencias()
     {
         $pdo = $this->db->connect();

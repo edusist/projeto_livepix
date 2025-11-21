@@ -35,6 +35,35 @@ class ClienteController
         require __DIR__ . "/../Views/clientes/listarClientes.php";
     }
 
+    public function pesquisar()
+    {
+        $id = $_POST["id"];
+
+        if ($id == "") {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION["msg"] = "Campo de pesquisa não pode ficar vazio!";
+            $_SESSION["msg_tipo"] = "danger";
+            header("Location: /cliente/listar");
+            exit;
+        }
+
+        // Converte para número ou NULL
+
+        $clientes = $this->clienteModel->search($id);
+
+        // echo "<pre>";
+        // var_dump($clientes);   
+        // echo "<br>";
+
+        // echo "</pre>";
+        // die();
+
+
+        require __DIR__ . "/../Views/clientes/listarClientes.php";
+    }
+
     public function create()
     {
         // $objAssistencia = new Assistencia($this->db);
@@ -53,7 +82,7 @@ class ClienteController
         $numero = $_POST["numero"] ?? null;
         $bairro = $_POST["bairro"] ?? null;
         $localidade = $_POST["localidade"] ?? null; //cidade
-        $uf = $_POST["uf"] ?? null;       
+        $uf = $_POST["uf"] ?? null;
         // echo "<pre>";
         // var_dump($cod_assistencia);
         // // var_dump($_REQUEST);
@@ -151,7 +180,7 @@ class ClienteController
     public function excluir($id)
     {
         $resultado = $this->clienteModel->delete($id);
-        
+
         // echo "<pre>";
         // var_dump($resultado);
         // echo "</pre>";

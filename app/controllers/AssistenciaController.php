@@ -37,6 +37,38 @@ class AssistenciaController
         require __DIR__ . "/../views/assistencias/listar_servicos_assistencia.php";
     }
 
+    public function pesquisar()
+    {
+        $id = $_POST["id"];
+
+        if ($id == "") {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION["msg"] = "Campo de pesquisa não pode ficar vazio!";
+            $_SESSION["msg_tipo"] = "danger";
+            header("Location: /assistencia/listar");
+            exit;
+        }
+
+        // Converte para número ou NULL
+
+        $assistencias = $this->assistenciaModel->search($id);
+
+        // foreach ($assistencias as $key => $value) {
+        //     echo "<pre>";
+        //     var_dump($value["situacao"]);
+        //     echo "<br>";
+
+        //     echo "</pre>";
+        //     die();
+        // }
+
+
+
+        require __DIR__ . "/../views/assistencias/listar_servicos_assistencia.php";
+    }
+
     public function create()
     {
         // Apenas exibe o formulário
@@ -132,9 +164,9 @@ class AssistenciaController
         exit;
     }
 
-     public function excluir($id)
+    public function excluir($id)
     {
-        $resultado = $this->assistenciaModel->delete($id);       
+        $resultado = $this->assistenciaModel->delete($id);
         // echo "<pre>";
         // var_dump($resultado);
         // echo "</pre>";
@@ -151,8 +183,7 @@ class AssistenciaController
             $_SESSION["msg_tipo"] = "danger";
         }
 
-          header("Location: /assistencia/listar");
+        header("Location: /assistencia/listar");
         exit;
     }
-
 }
