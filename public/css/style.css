@@ -1,0 +1,16 @@
+body {
+    font-family: Arial, sans-serif;
+	font-weight: 400;
+	font-size: 1rem;
+	color: #000;
+}
+
+a {
+	text-decoration: none !important;
+
+}
+
+a.voltar{
+    font-size: 2rem;
+	color: #252f44;
+}

@@ -1,0 +1,1 @@
+{"version":2,"defects":{"ClienteInsertTest::testInserirCliente":7},"times":{"DatabaseTest::testSeConexaoRetornaObjPDO":0.006,"DatabaseTest::testSeConexaoNaoEhNula":0.002,"ClienteInsertTest::testInserirCliente":0.003}}
