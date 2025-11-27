@@ -104,8 +104,3 @@ require __DIR__ . "/../../../vendor/autoload.php";
     </div>
 </div>
 <script src="/../../../public/js/buscaCep.js"></script>
-<?php
-
-require __DIR__ . "/../layout/footer.php";
-
-?>

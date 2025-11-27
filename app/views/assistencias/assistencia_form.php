@@ -59,8 +59,3 @@ require __DIR__ . "/../../../vendor/autoload.php";
         </div>
     </div>
 </div>
-<?php
-
-require __DIR__ . "/../layout/footer.php";
-
-?>
