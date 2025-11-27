@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (!session_status() === PHP_SESSION_ACTIVE) {
+    session_start();
+}
 if (isset($_SESSION["msg"])) {
 
     $msg = $_SESSION["msg"] ?? '';
@@ -78,11 +80,8 @@ if (isset($_SESSION["msg"])) {
                             <a class="btn btn-danger btn-sm" href="/cliente/excluir/<?= $cliente['cod'] ?>">Excluir</a>
                         </td>
                     </tr>
-                <?php endforeach;
-
+            <?php endforeach;
             endif; ?>
-
-
         </table>
     </div>
 </div>

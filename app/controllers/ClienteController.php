@@ -45,7 +45,7 @@ class ClienteController
             }
             $_SESSION["msg"] = "Campo de pesquisa não pode ficar vazio!";
             $_SESSION["msg_tipo"] = "danger";
-            header("Location: /cliente/listar");
+                    echo '<meta http-equiv="refresh" content="0; url=/cliente/listar">';
             exit;
         }
 
@@ -75,6 +75,10 @@ class ClienteController
 
     public function store()
     {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $nome = $_POST["nome"] ?? null;
         $cod_assistencia = $_POST["cod_assistencia"] == "" ? null  : $_POST["cod_assistencia"];
         $cep = $_POST["cep"] ?? null;
@@ -102,9 +106,7 @@ class ClienteController
         $resultado = $this->clienteModel->save($nome, $cod_assistencia, $logradouro, $numero, $bairro, $localidade, $uf, $cep);
 
 
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+
         // var_dump(session_status());
 
         if ($resultado) {
@@ -115,7 +117,7 @@ class ClienteController
             $_SESSION["msg_tipo"] = "danger";
         }
 
-        header("Location: /cliente/listar");
+                echo '<meta http-equiv="refresh" content="0; url=/cliente/listar">';
         exit;
     }
 
@@ -129,6 +131,11 @@ class ClienteController
 
     public function update($id)
     {
+
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        // var_dump(session_status());
 
         // echo "<pre>";
         // var_dump($id);
@@ -160,11 +167,6 @@ class ClienteController
 
         $resultado = $this->clienteModel->atualizar($id, $dados);
 
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        // var_dump(session_status());
-
         if ($resultado) {
             $_SESSION["msg"] = "Cliente atualizado com sucesso!";
             $_SESSION["msg_tipo"] = "success";
@@ -173,7 +175,8 @@ class ClienteController
             $_SESSION["msg_tipo"] = "danger";
         }
 
-        header("Location: /cliente/listar");
+        // header("Location: /cliente/listar");
+        echo '<meta http-equiv="refresh" content="0; url=/cliente/listar">';
         exit;
     }
 
@@ -195,7 +198,7 @@ class ClienteController
             $_SESSION["msg_tipo"] = "danger";
         }
 
-        header("Location: /cliente/listar");
+        echo '<meta http-equiv="refresh" content="0; url=/cliente/listar">';
         exit;
     }
 }

@@ -7,10 +7,11 @@ use PDOException;
 
 class Database
 {
-    private string $host = "localhost";
+    private string $host = 'projeto_livepix-db';  
     private string $dbname;
     private string $user = "root";
-    private string $password = "";
+    private string $password = "root";
+    // private $port = "3306";
 
     // 1. Construtor aceita credenciais (Injeção de Dependência de Configuração)
     public function __construct(string $dbname = "assistencia")
@@ -27,7 +28,7 @@ class Database
     {
         try {
             $conn = new PDO(
-                "mysql:host={$this->host};dbname={$this->dbname}",
+                "mysql:host={$this->host};dbname={$this->dbname};charset=utf8",
                 $this->user,
                 $this->password
             );

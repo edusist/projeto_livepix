@@ -47,7 +47,7 @@ class AssistenciaController
             }
             $_SESSION["msg"] = "Campo de pesquisa não pode ficar vazio!";
             $_SESSION["msg_tipo"] = "danger";
-            header("Location: /assistencia/listar");
+           echo '<meta http-equiv="refresh" content="0; url=/assistencia/listar">';
             exit;
         }
 
@@ -110,7 +110,7 @@ class AssistenciaController
             $_SESSION["msg"] = "Erro ao salvar Assistência!";
             $_SESSION["msg_tipo"] = "danger";
         }
-        header("Location: /assistencia/listar");
+       echo '<meta http-equiv="refresh" content="0; url=/assistencia/listar">';
         exit;
     }
 
@@ -160,7 +160,7 @@ class AssistenciaController
             $_SESSION["msg_tipo"] = "danger";
         }
 
-        header("Location: /assistencia/listar");
+       echo '<meta http-equiv="refresh" content="0; url=/assistencia/listar">';
         exit;
     }
 
@@ -183,7 +183,7 @@ class AssistenciaController
             $_SESSION["msg_tipo"] = "danger";
         }
 
-        header("Location: /assistencia/listar");
+       echo '<meta http-equiv="refresh" content="0; url=/assistencia/listar">';
         exit;
     }
 }

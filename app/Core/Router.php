@@ -16,62 +16,63 @@ class Router
 
     public function get(string $uri, callable|array $action)
     {
-
         $this->routes['GET'][$uri] = $action;
     }
 
     public function post(string $uri, callable|array $action)
     {
         $this->routes['POST'][$uri] = $action;
-
-        // var_dump($this->routes['POST'][$uri] = $action);
     }
 
     public function dispatch()
     {
+        ob_start(); // evita "headers already sent"
+
         $method = $_SERVER["REQUEST_METHOD"];
         $uri = strtok($_SERVER["REQUEST_URI"], "?");
 
-        // Verifica rotas normais primeiro
+        // ---------------- ROTAS EXATAS ----------------
         if (isset($this->routes[$method][$uri])) {
             $action = $this->routes[$method][$uri];
-
-            $controllerClass = $action[0];
-            $methodName = $action[1];
-
-            $controller = new $controllerClass($this->db);
-            return $controller->$methodName();
+            $controller = new $action[0]($this->db);
+            return $controller->{$action[1]}();
         }
 
-        // Agora verifica rotas com parâmetros {id}
-        foreach ($this->routes[$method] as $route => $action) {
+        // ------------- ROTAS COM {id} -----------------
+        if (!empty($this->routes[$method])) {
+            foreach ($this->routes[$method] as $route => $action) {
 
-            // Se a rota tiver um placeholder {algo}
-            if (strpos($route, "{") !== false) {
+                if (strpos($route, "{") !== false) {
 
-                // Transforma a rota em REGEX
-                $regex = preg_replace('#\{[a-zA-Z_]+\}#', '([a-zA-Z0-9_-]+)', $route);
-                $regex = "#^" . $regex . "$#";
+                    $regex = preg_replace('#\{[a-zA-Z_]+\}#', '([a-zA-Z0-9_-]+)', $route);
+                    $regex = "#^" . $regex . "$#";
 
-                // Verifica se a URI atual bate com o regex
-                if (preg_match($regex, $uri, $matches)) {
+                    if (preg_match($regex, $uri, $params)) {
+                        array_shift($params);
 
-                    array_shift($matches); // remove o match completo
-                    $params = $matches;    // parametros extraídos
-
-                    $controllerClass = $action[0];
-                    $methodName = $action[1];
-
-                    $controller = new $controllerClass($this->db);
-
-                    // Chama o método passando o ID como argumento
-                    return $controller->$methodName(...$params);
+                        $controller = new $action[0]($this->db);
+                        return $controller->{$action[1]}(...$params);
+                    }
                 }
             }
         }
 
-        // Se nada bater → 404
-        http_response_code(404);
-        echo "404 - Página não encontrada";
+        // ----- SE NÃO ACHAR ROTA >> CHAMA O 404 -----
+        return $this->notFound();
+    }
+
+    // 🔥 AQUI entra seu método
+    public function notFound()
+    {
+        http_response_code(404); // cabeçalho primeiro
+
+        $file = __DIR__ . "/../Views/404.php";
+
+        if (file_exists($file)) {
+            require_once $file;
+        } else {
+            echo "<h2 style='color:#b30000;font-family:Arial'>404 - Página não encontrada</h2>";
+        }
+        exit;
     }
 }

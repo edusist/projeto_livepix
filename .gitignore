@@ -1,0 +1,5 @@
+# Ignorar containers e dados temporários do Docker
+docker-compose.yml
+mysql_data/
+
+

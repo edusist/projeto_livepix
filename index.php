@@ -1,8 +1,13 @@
 <?php
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 use App\Core\Router;
 use App\Controllers\ClienteController;
 use App\config\Database;
+
 
 require __DIR__ . "/vendor/autoload.php";
 
