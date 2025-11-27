@@ -14,3 +14,25 @@ a.voltar{
     font-size: 2rem;
 	color: #252f44;
 }
+.navbar-custom {
+    background-color: #3E3794!important; /* COR DA NAVBAR */
+	padding: 10px;
+}
+
+.navbar-custom .nav-link,
+.navbar-custom .navbar-brand,
+.navbar-custom .dropdown-item {
+    color: #fff ; /* links brancos */
+}
+
+.navbar-custom .dropdown-menu {
+    background-color: #3e3794!important; /* fundo do dropdown */
+}
+
+.navbar-custom .dropdown-item {
+    color: #fff !important; /* texto branco no dropdown */
+}
+
+.navbar-custom .dropdown-item:hover {
+    background-color: #69A5D9 !important; /* hover bonito */
+}
